@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-public class BatchConfig {
+public class ArquivoLarguraFixaJobConfig {
 
 	@Bean
-	public Job arquivoLarguraFixaJob(JobRepository jobRepository, Step leituraArquivoLarguraFixaStep) {
+	public Job arquivoLarguraFixaJob(Step leituraArquivoLarguraFixaStep, JobRepository jobRepository) {
 		return new JobBuilder("arquivoLarguraFixaJob", jobRepository)
 				.start(leituraArquivoLarguraFixaStep)
 				.incrementer(new RunIdIncrementer())

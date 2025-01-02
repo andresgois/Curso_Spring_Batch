@@ -12,14 +12,22 @@ import org.springframework.transaction.PlatformTransactionManager;
 import io.github.andresgois.domain.Cliente;
 
 @Configuration
-public class LerArquivoStep {
+public class LeituraArquivoLarguraFixaStepConfig {
 
+	private final JobRepository jobRepository;
+	private final PlatformTransactionManager manager;
+
+	public LeituraArquivoLarguraFixaStepConfig(JobRepository jobRepository,
+			PlatformTransactionManager transactionManager) {
+		this.jobRepository = jobRepository;
+		this.manager = transactionManager;
+	}
+	
 	@Bean
-	public Step leituraArquivoLarguraFixaStep(JobRepository jobRepository,ItemReader<Cliente> leituraArquivoLarguraFixaReader,
-			ItemWriter<Cliente> leituraArquivoLarguraFixaWrite,
-			PlatformTransactionManager platformTransactionManager) {
+	public Step leituraArquivoLarguraFixaStep(ItemReader<Cliente> leituraArquivoLarguraFixaReader,
+			ItemWriter<Cliente> leituraArquivoLarguraFixaWrite) {
 		return new StepBuilder("leituraArquivoLarguraFixaStep", jobRepository)
-				.<Cliente, Cliente>chunk(1,platformTransactionManager)
+				.<Cliente, Cliente>chunk(1, manager)
 				.reader(leituraArquivoLarguraFixaReader)
 				.writer(leituraArquivoLarguraFixaWrite)
 				.build();
