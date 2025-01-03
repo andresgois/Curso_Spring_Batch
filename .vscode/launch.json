@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-App01Application<app01>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "io.github.andresgois.app01.App01Application",
+      "projectName": "app01",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-App01Application<app04>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "io.github.andresgois.app01.App01Application",
+      "projectName": "app04",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
