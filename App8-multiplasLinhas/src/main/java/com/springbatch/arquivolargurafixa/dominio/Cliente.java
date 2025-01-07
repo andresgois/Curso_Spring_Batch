@@ -1,10 +1,14 @@
 package com.springbatch.arquivolargurafixa.dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cliente {
 	private String nome;
 	private String sobrenome;
 	private String idade;
 	private String email;
+	private List<Transacao> transacaos = new ArrayList<Transacao>();
 
 	public String getNome() {
 		return nome;
@@ -44,7 +48,16 @@ public class Cliente {
 	                "nome='" + nome + "'" +
 	                ", sobrenome ='" + sobrenome + "'" +
 	                ", idade='" + idade + "'" +
+				(transacaos.isEmpty() ? "" : ", transacoes=" + transacaos) +
 	                ", email='" + email + "'" +
 	                '}';
+	}
+
+	public List<Transacao> getTransacaos() {
+		return transacaos;
+	}
+
+	public void setTransacaos(List<Transacao> transacaos) {
+		this.transacaos = transacaos;
 	}
 }
