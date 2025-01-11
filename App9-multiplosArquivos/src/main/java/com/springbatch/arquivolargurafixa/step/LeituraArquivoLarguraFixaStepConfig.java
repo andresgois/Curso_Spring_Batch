@@ -7,6 +7,7 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -24,11 +25,11 @@ public class LeituraArquivoLarguraFixaStepConfig {
 
 	@Bean
 	public Step leituraArquivoLarguraFixaStep(
-			FlatFileItemReader leituraArquivoLarguraFixaReader,
+			MultiResourceItemReader<Cliente> multiplosArquivosClienteTransacaoReader,
 			ItemWriter<Cliente> leituraArquivoLarguraFixaWriter) {
 		return new StepBuilder("leituraArquivoLarguraFixaStep", jobRepository)
 				.<Cliente, Cliente>chunk(1, transactionManager)
-				.reader(new ArquivoClienteTransacaoReader(leituraArquivoLarguraFixaReader))
+				.reader(multiplosArquivosClienteTransacaoReader)
 				.writer(leituraArquivoLarguraFixaWriter)
 				.build();
 	}
