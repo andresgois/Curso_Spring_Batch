@@ -27,7 +27,7 @@ public class JdbcCursorReaderConfig {
 		return new JdbcCursorItemReaderBuilder<Cliente>()
 				.name("JdbcCursorItemReader")
 				.dataSource(dataSource)
-				.sql("select * from cliente")
+				.sql("select c.* from Cliente c")
 				.rowMapper(new BeanPropertyRowMapper<>(Cliente.class))
 				.build();
 	}
