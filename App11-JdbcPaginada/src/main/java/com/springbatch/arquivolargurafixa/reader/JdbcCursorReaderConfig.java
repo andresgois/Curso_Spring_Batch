@@ -1,18 +1,13 @@
 package com.springbatch.arquivolargurafixa.reader;
 
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
-import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.LineMapper;
-import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import com.springbatch.arquivolargurafixa.dominio.Cliente;
+import org.springframework.batch.item.database.JdbcPagingItemReader;
+import org.springframework.batch.item.database.PagingQueryProvider;
+import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
+import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-
-import com.springbatch.arquivolargurafixa.dominio.Cliente;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import javax.sql.DataSource;
@@ -21,14 +16,30 @@ import javax.sql.DataSource;
 public class JdbcCursorReaderConfig {
 
 	@Bean
-	public JdbcCursorItemReader<Cliente> jdbcCursorReader(
-			@Qualifier("appDataSource") DataSource dataSource
+	public JdbcPagingItemReader<Cliente> jdbcCursorReader(
+			@Qualifier("appDataSource") DataSource dataSource,
+			PagingQueryProvider provider
 	) {
-		return new JdbcCursorItemReaderBuilder<Cliente>()
-				.name("JdbcCursorItemReader")
+		return new JdbcPagingItemReaderBuilder<Cliente>()
+				.name("JdbcPagingItemReader")
 				.dataSource(dataSource)
-				.sql("select c.* from Cliente c")
+				.queryProvider(provider)
+				.pageSize(1)
 				.rowMapper(new BeanPropertyRowMapper<>(Cliente.class))
 				.build();
 	}
+
+	@Bean
+	public SqlPagingQueryProviderFactoryBean provider(
+			@Qualifier("appDataSource") DataSource dataSource
+	){
+		SqlPagingQueryProviderFactoryBean queryFactory = new SqlPagingQueryProviderFactoryBean();
+		queryFactory.setDataSource(dataSource);
+		queryFactory.setSelectClause("select *");
+		queryFactory.setFromClause("from Cliente");
+		queryFactory.setWhereClause("1 = 1");
+		queryFactory.setSortKey("email");
+		return queryFactory;
+	}
+
 }
