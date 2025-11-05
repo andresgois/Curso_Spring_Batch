@@ -55,7 +55,7 @@ Categories=Development
         - enviar e-mail, notificações, folha de pagamento, etc...
     - Grande volume de dados
 - Definição
-> "Um sistame que realiza um processamento de uma quantidade finita de dados sem interação ou interrupção."
+> "Um sistema que realiza um processamento de uma quantidade finita de dados sem interação ou interrupção."
 - **Ao criar um aplicação e adicionar a depência do Batch também é necessário colocar um banco, caso contrário a aplicação não funciona, necessário um banco porque ele salva metadados.**
 
 ## Trabalhando com Jobs e Steps
