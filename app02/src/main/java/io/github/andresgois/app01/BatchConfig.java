@@ -36,6 +36,10 @@ public class BatchConfig {
 
 	@Bean
 	@StepScope
+	/**
+	 * No eclipse -> Adiciona em: Run configurations --> arguments => nome=tal
+	 * No Intellij --> Edit configurations --> Programs arguments
+	 */
 	public Tasklet imprimeOlaJobTasket(@Value("#{jobParameters['nome']}") String nome) {
 		return new Tasklet() {
 		@Override
